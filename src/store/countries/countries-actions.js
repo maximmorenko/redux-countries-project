@@ -22,7 +22,7 @@ export const setError = (err) => ({
 export const loadCountries = () => (dispatch, _, {client, api}) => {
   // клиента и апи достанем из переданого экстраАргумента 
   // второй параметр гетСтейт оставим пустуй
-  console.log(loadCountries)
+  // console.log(loadCountries)
   // до похода на сервер за списком стран, запускаем загрузку
   dispatch(setLoading());
 
