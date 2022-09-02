@@ -28,6 +28,7 @@ export const detailsReducer = (state = initialState, {type, payload}) => {
         currentCountry: payload
       }
     case CLEAR_DETAILS:
+      // очищаем детали, возвращаем пустой стейт
       return initialState;
     case SET_NEIGHBORS:
       return {
