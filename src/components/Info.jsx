@@ -1,4 +1,8 @@
 import styled from 'styled-components';
+import {useDispatch, useSelector} from 'react-redux';
+import { selectNeighbors } from '../store/details/details-selector';
+import { useEffect } from 'react';
+import { loadNeighborsByBorder } from '../store/details/details-actions';
 
 const Wrapper = styled.section`
   margin-top: 3rem;
@@ -102,6 +106,16 @@ export const Info = (props) => {
     push,
   } = props;
 
+  const dispatch = useDispatch();
+  const neighbors = useSelector(selectNeighbors);
+
+  useEffect(() => {
+    // проверяем есть ли соседи, если у массива есть длина, то тогда делаем вызов функции загрузки соседей по бордерам
+    if (borders.length) {
+      dispatch(loadNeighborsByBorder(borders));
+    }
+  }, [borders, dispatch]);
+
   return (
     <Wrapper>
       <InfoImage src={flag} alt={name} />
@@ -153,9 +167,11 @@ export const Info = (props) => {
             <span>There is no border countries</span>
           ) : (
             <TagGroup>
-              {[].map((b) => (
-                <Tag key={b} onClick={() => push(`/country/${b}`)}>
-                  {b}
+              {neighbors.map((countryName) => (
+                <Tag key={countryName} onClick={() => push(`/country/${countryName}`)}>
+                  {/* пуш получили от родителя (детали) там передали в него навигейт
+                  а здесь вызвваем его и передаем в него путь с вывбраной страной-соседом */}
+                  {countryName}
                 </Tag>
               ))}
             </TagGroup>
@@ -165,3 +181,4 @@ export const Info = (props) => {
     </Wrapper>
   );
 };
+

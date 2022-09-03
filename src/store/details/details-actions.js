@@ -25,7 +25,7 @@ export const clearDetails = () => ({
   type: CLEAR_DETAILS
 });
 
-// thank для внешнего мира
+// thank загружающий детали страны, для внешнего мира 
 export const loadCountryByName = (name) => (dispatch, _, {client, api}) => {
   dispatch(setLoading());
 
@@ -34,8 +34,9 @@ export const loadCountryByName = (name) => (dispatch, _, {client, api}) => {
     .catch((err) => dispatch(setError(err.message)))
 }
 
+// thank загружающий соседей
 export const loadNeighborsByBorder = (borders) => (dispatch, _, {client, api}) => {
   client.get(api.filterByCode(borders))
-    .then(({data}) => dispatch(setNeighbors(data.map((c) => c.name))))
+    .then(({data}) => dispatch(setNeighbors(data.map((c) => c.name)))) // из полученых данных достанем названия стран
     .catch(console.error);
 }
